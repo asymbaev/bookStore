@@ -62,12 +62,48 @@ public class BookStoreApp {
     }
 
     private static void readBookById(Scanner sc) {
+
     }
 
     private static void deleteBook(Scanner sc) {
+        System.out.println("Enter a book id to delete ");
+        int bookId = sc.nextInt();
+        sc.nextLine();
+        Book book = bookDao.getBookById(bookId);
+        if (book == null) {
+            System.out.println("No book found ");
+        } else bookDao.deleteBook(bookId);
+        System.out.println("Book deleted successfully");
+
     }
 
     private static void updateBook(Scanner sc) {
+        System.out.println("Enter book id to update ");
+        int bookId = sc.nextInt();
+        sc.nextLine();
+        Book book = bookDao.getBookById(bookId);
+        if (book == null){
+            System.out.println("Book not found");
+        } else {
+            System.out.println("Enter new book title (or press Enter to skip): ");
+            String title = sc.nextLine();
+            System.out.println("Enter new book author (or press Enter to skip): ");
+            String author = sc.nextLine();
+            System.out.println("Enter new book genre (or press Enter to skip): ");
+            String genre = sc.nextLine();
+            System.out.println("Enter new book title (or press 0 to skip): ");
+            double price = sc.nextDouble();
+            sc.nextLine();
+            book.setTitle(title.isEmpty()? book.getTitle() : title);
+            book.setAuthor(author.isEmpty()? book.getAuthor() : author);
+            book.setGenre(genre.isEmpty()? book.getGenre() : genre);
+            book.setPrice(price == 0 ? book.getPrice() : price);
+
+            //update the book
+            bookDao.updateBook(book);
+            System.out.println("Book updated successfully");
+
+        }
     }
 
     private static void addBook(Scanner sc) {
